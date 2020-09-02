@@ -1,21 +1,25 @@
 import React, { Component } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
-import ListExercise from './Components/ListExercise';
-import StylingExercise from './Components/StylingExercise';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import ColorPalette from './screens/ColorPalette';
+import Home from './screens/Home';
+
+const Stack = createStackNavigator();
 
 export default class App extends Component {
   render() {
     return (
-      <SafeAreaView style={styles.safeArea}>
-        {/* <StylingExercise /> */}
-        <ListExercise />
-      </SafeAreaView>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen
+            name="ColorPalette"
+            component={ColorPalette}
+            options={({ route }) => ({ title: route.params.paletteName })}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
-});
