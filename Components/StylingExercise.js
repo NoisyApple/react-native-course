@@ -12,7 +12,7 @@ let colors = [
 export default class StylingExercise extends Component {
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <Text style={styles.text}>Here are some boxes of different colors</Text>
         <FlatList
           data={colors}
@@ -31,5 +31,9 @@ const styles = StyleSheet.create({
     margin: 3,
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  container: {
+    paddingVertical: 3,
+    paddingHorizontal: 10,
   },
 });

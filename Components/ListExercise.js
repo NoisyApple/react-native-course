@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, FlatList, View, StyleSheet } from 'react-native';
+import ColorBox from './ColorBox';
 
 const COLORS = [
   { colorName: 'Base03', hexCode: '#002b36' },
@@ -22,6 +23,29 @@ const COLORS = [
 
 export default class ListExercise extends Component {
   render() {
-    return <Text>Hello</Text>;
+    return (
+      <View style={styles.container}>
+        <FlatList
+          data={COLORS}
+          keyExtractor={(item) => item.colorName}
+          renderItem={({ item }) => (
+            <ColorBox name={item.colorName} hexCode={item.hexCode} />
+          )}
+          ListHeaderComponent={<Text style={styles.text}>Solarized</Text>}
+        />
+      </View>
+    );
   }
 }
+
+const styles = StyleSheet.create({
+  text: {
+    margin: 3,
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  container: {
+    paddingVertical: 3,
+    paddingHorizontal: 10,
+  },
+});
