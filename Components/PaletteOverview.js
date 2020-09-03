@@ -35,7 +35,8 @@ export default class PaletteOverview extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 15,
+    marginVertical: 8,
+    marginHorizontal: 10,
   },
   text: {
     marginBottom: 3,

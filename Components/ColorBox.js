@@ -1,18 +1,30 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { getContrastColor } from '../utils';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class ColorBox extends Component {
   render() {
-    const { name, hexCode } = this.props;
+    const { name, hexCode, navigation } = this.props;
     const fontColor = getContrastColor(hexCode);
 
     return (
-      <View style={[styles.child, styles.box, { backgroundColor: hexCode }]}>
-        <Text
-          style={[styles.boxText, styles.text, { color: fontColor }]}
-        >{`${name} ${hexCode}`}</Text>
-      </View>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.setOptions({
+            headerStyle: {
+              backgroundColor: hexCode,
+            },
+            headerTintColor: getContrastColor(hexCode),
+          })
+        }
+      >
+        <View style={[styles.child, styles.box, { backgroundColor: hexCode }]}>
+          <Text
+            style={[styles.boxText, styles.text, { color: fontColor }]}
+          >{`${name} ${hexCode.toUpperCase()}`}</Text>
+        </View>
+      </TouchableOpacity>
     );
   }
 }
@@ -24,7 +36,8 @@ const styles = StyleSheet.create({
   },
   box: {
     borderRadius: 5,
-    margin: 3,
+    marginVertical: 3,
+    marginHorizontal: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.3,

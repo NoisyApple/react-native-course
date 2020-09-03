@@ -4,6 +4,7 @@ import ColorBox from '../components/ColorBox';
 
 export default class ColorPalette extends Component {
   render() {
+    const { navigation } = this.props;
     const { colors, paletteName } = this.props.route.params;
 
     return (
@@ -12,7 +13,11 @@ export default class ColorPalette extends Component {
           data={colors}
           keyExtractor={(item) => item.colorName}
           renderItem={({ item }) => (
-            <ColorBox name={item.colorName} hexCode={item.hexCode} />
+            <ColorBox
+              navigation={navigation}
+              name={item.colorName}
+              hexCode={item.hexCode}
+            />
           )}
           ListHeaderComponent={<Text style={styles.text}>{paletteName}</Text>}
         />
@@ -23,12 +28,14 @@ export default class ColorPalette extends Component {
 
 const styles = StyleSheet.create({
   text: {
-    margin: 3,
+    marginTop: 5,
+    marginHorizontal: 10,
+
     fontWeight: 'bold',
     fontSize: 16,
   },
   container: {
-    paddingVertical: 3,
-    paddingHorizontal: 10,
+    // paddingVertical: 3,
+    // paddingHorizontal: 10,
   },
 });
