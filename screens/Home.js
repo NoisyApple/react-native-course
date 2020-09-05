@@ -1,19 +1,32 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList } from 'react-native';
 import PaletteOverview from '../components/PaletteOverview';
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation, route }) => {
   const [palettes, setPalettes] = useState([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const getPalettesFromAPI = useCallback(async () => {
-    const request = await fetch(
-      'https://notes-app-5fe57.firebaseio.com/db/palettes.json',
-    );
-    const data = await request.json();
+    let data;
+
+    if (!route.params) {
+      const request = await fetch(
+        'https://notes-app-5fe57.firebaseio.com/db/palettes.json',
+      );
+      data = await request.json();
+    } else {
+      data = route.params.newPalettes;
+    }
 
     setPalettes(data);
-  }, []);
+  }, [route.params]);
+
+  const handleRefresh = useCallback(async () => {
+    setIsRefreshing(true);
+    await getPalettesFromAPI();
+    setIsRefreshing(false);
+  }, [setIsRefreshing, getPalettesFromAPI]);
 
   useEffect(() => {
     getPalettesFromAPI();
@@ -22,6 +35,8 @@ const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <FlatList
+        refreshing={isRefreshing}
+        onRefresh={handleRefresh}
         data={palettes}
         keyExtractor={(palette) => palette.id + ''}
         renderItem={({ item }) => (
